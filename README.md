@@ -65,10 +65,20 @@ const IdeaSchema = new mongoose.Schema({
 module.exports = mongoose.model('Idea', IdeaSchema);
 
                 
-                {success && <p className="success">{success}</p>}
-            </form>
-        </div>
-    );
-};
-
+                {success && <p className="success">{success}</p>}  </form> </div>);};
 export default IdeaSubmissionForm;
+
+// backend/src/controllers/ideaController.js
+
+const Idea = require('../models/Idea');
+
+exports.submitIdea = async (req, res) => {
+    try {
+        const { title, description, category } = req.body;
+        const newIdea = new Idea({ title, description, category });
+        await newIdea.save();
+        res.status(201).json({ message: 'Idea submitted successfully!' });
+    } catch (error) {
+        res.status(400).json({ error: 'Failed to submit idea.' });
+    }
+};
