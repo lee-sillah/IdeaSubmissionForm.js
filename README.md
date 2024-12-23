@@ -82,3 +82,35 @@ exports.submitIdea = async (req, res) => {
         res.status(400).json({ error: 'Failed to submit idea.' });
     }
 };
+// backend/src/routes/ideaRoutes.js
+
+const express = require('express');
+const router = express.Router();
+const ideaController = require('../controllers/ideaController');
+
+router.post('/', ideaController.submitIdea);
+
+module.exports = router;
+
+// backend/src/server.js
+
+const express = require('express');
+const mongoose = require('mongoose');
+const ideaRoutes = require('./routes/ideaRoutes');
+
+const app = express();
+app.use(express.json()); // for parsing application/json
+
+// MongoDB connection
+mongoose.connect('mongodb://localhost/green_future', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
+
+// Routes
+app.use('/api/ideas', ideaRoutes);
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
