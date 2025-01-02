@@ -5,7 +5,7 @@ services:
     plan: free
     buildCommand: npm install
     startCommand: npm start
-    repo: https://github.com/your-username/idea-submission
+    repo: https://github.com/your-username/idea-submission 
     branch: main
 
   - type: static
